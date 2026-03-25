@@ -273,8 +273,8 @@ function generateClangdArgs(isChromiumProject: boolean, compileCommandsPath?: st
     args.push('--limit-results=1000');
   }
 
-  // Always enable malloc trim for long-running instances
-  if (!args.some(arg => arg.includes('malloc-trim'))) {
+  // Always enable malloc trim for long-running instances (Linux only — not supported on Windows)
+  if (process.platform !== 'win32' && !args.some(arg => arg.includes('malloc-trim'))) {
     args.push('--malloc-trim');
   }
 
